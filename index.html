@@ -1,337 +1,350 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aubrite Health AI</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aubrite Health AI</title>
+  <script type="module" src="https://unpkg.com/@splinetool/viewer@1.9.36/build/spline-viewer.js"></script>
+  <style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-        :root {
-            --primary: #4A90E2;
-            --primary-dark: #357ABD;
-            --secondary: #81C3F5;
-            --accent: #E8F4FF;
-            --text: #2D3436;
-            --light-bg: #F7FBFF;
-        }
+    :root {
+        --primary: #4A90E2;
+        --primary-dark: #357ABD;
+        --secondary: #81C3F5;
+        --accent: #E8F4FF;
+        --text: #2D3436;
+        --light-bg: #F7FBFF;
+    }
 
-        nav {
-            background: var(--primary);
-            padding: 1rem;
-            position: fixed;
-            width: 100%;
-            z-index: 100;
-            box-shadow: 0 2px 10px rgba(74, 144, 226, 0.2);
-        }
+    nav {
+        background: var(--primary);
+        padding: 1rem;
+        position: fixed;
+        width: 100%;
+        z-index: 100;
+        box-shadow: 0 2px 10px rgba(74, 144, 226, 0.2);
+    }
 
-        .nav-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    .nav-content {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-        .logo {
-            color: white;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
+    .logo {
+        color: white;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
 
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin-left: 2rem;
-            transition: color 0.3s;
-        }
+    .nav-links a {
+        color: white;
+        text-decoration: none;
+        margin-left: 2rem;
+        transition: color 0.3s;
+    }
 
-        .nav-links a:hover {
-            color: var(--accent);
-        }
+    .nav-links a:hover {
+        color: var(--accent);
+    }
 
-        .hero {
+    .hero {
+        height: 100vh;
+        background: linear-gradient(rgba(74, 144, 226, 0.9), rgba(53, 122, 189, 0.9)), url('/api/placeholder/1920/1080');
+        background-size: cover;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        padding: 2rem;
+    }
+
+    .hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .hero p {
+        font-size: 1.2rem;
+        max-width: 800px;
+        margin: 0 auto 2rem;
+        line-height: 1.6;
+    }
+
+    .cta-btn {
+        background: white;
+        color: var(--primary);
+        padding: 1rem 2rem;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: bold;
+    }
+
+    .cta-btn:hover {
+        transform: translateY(-3px);
+        background: var(--accent);
+        box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
+    }
+
+    .features {
+        padding: 5rem 2rem;
+        max-width: 1200px;
+        margin: 0 auto;
+        background: var(--light-bg);
+    }
+
+    .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+        color: var(--primary-dark);
+    }
+
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+
+    .feature-card {
+        padding: 2rem;
+        border-radius: 10px;
+        background: white;
+        box-shadow: 0 5px 15px rgba(74, 144, 226, 0.1);
+        text-align: left;
+        transition: transform 0.3s;
+    }
+
+    .feature-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 8px 20px rgba(74, 144, 226, 0.2);
+    }
+
+    .feature-card h3 {
+        color: var(--primary-dark);
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+    }
+
+    .feature-card p {
+        color: var(--text);
+        line-height: 1.6;
+    }
+
+    .process {
+        padding: 5rem 2rem;
+        background: white;
+    }
+
+    .process-steps {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .step {
+        text-align: center;
+        padding: 2rem;
+    }
+
+    .step-number {
+        background: var(--primary);
+        color: white;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1rem;
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .stats {
+        background: var(--primary);
+        color: white;
+        padding: 5rem 2rem;
+        text-align: center;
+    }
+
+    .stats-grid {
+        max-width: 1200px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+    }
+
+    .stat-item h3 {
+        font-size: 2.5rem;
+        color: white;
+        margin-bottom: 0.5rem;
+    }
+
+    .stat-item p {
+        color: var(--accent);
+        font-size: 1.1rem;
+    }
+
+    footer {
+        background: var(--primary-dark);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+    #spline-container {
             height: 100vh;
-            background: linear-gradient(rgba(74, 144, 226, 0.9), rgba(53, 122, 189, 0.9)), url('/api/placeholder/1920/1080');
-            background-size: cover;
+            width: 100%;
             display: flex;
-            align-items: center;
             justify-content: center;
-            text-align: center;
-            color: white;
-            padding: 2rem;
+            align-items: center;
+        }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
         }
 
         .hero h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            max-width: 800px;
-            margin: 0 auto 2rem;
-            line-height: 1.6;
-        }
-
-        .cta-btn {
-            background: white;
-            color: var(--primary);
-            padding: 1rem 2rem;
-            border: none;
-            border-radius: 5px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-weight: bold;
-        }
-
-        .cta-btn:hover {
-            transform: translateY(-3px);
-            background: var(--accent);
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.3);
-        }
-
-        .features {
-            padding: 5rem 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-            background: var(--light-bg);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--primary-dark);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            padding: 2rem;
-            border-radius: 10px;
-            background: white;
-            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.1);
-            text-align: left;
-            transition: transform 0.3s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 8px 20px rgba(74, 144, 226, 0.2);
-        }
-
-        .feature-card h3 {
-            color: var(--primary-dark);
-            margin-bottom: 1rem;
-            font-size: 1.5rem;
-        }
-
-        .feature-card p {
-            color: var(--text);
-            line-height: 1.6;
-        }
-
-        .process {
-            padding: 5rem 2rem;
-            background: white;
-        }
-
-        .process-steps {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .step {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .step-number {
-            background: var(--primary);
-            color: white;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1rem;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .stats {
-            background: var(--primary);
-            color: white;
-            padding: 5rem 2rem;
-            text-align: center;
-        }
-
-        .stats-grid {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-        }
-
-        .stat-item h3 {
             font-size: 2.5rem;
-            color: white;
-            margin-bottom: 0.5rem;
         }
-
-        .stat-item p {
-            color: var(--accent);
-            font-size: 1.1rem;
-        }
-
-        footer {
-            background: var(--primary-dark);
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-        }
-    </style>
+    }
+  </style>
 </head>
 <body>
-    <nav>
-        <div class="nav-content">
-            <div class="logo">AUBRITE HEALTH AI</div>
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#features">Features</a>
-                <a href="#process">How It Works</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </div>
-    </nav>
+<nav>
+  <div class="nav-content">
+    <div class="logo">AUBRITE HEALTH AI</div>
+    <div class="nav-links">
+      <a href="#home">Home</a>
+      <a href="#features">Features</a>
+      <a href="#process">How It Works</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
 
-    <section class="hero" id="home">
-        <div>
-            <h1>Early Disease Detection Through AI Eye Analysis</h1>
-            <p>Our advanced AI-powered application analyzes eye images to detect early signs of diseases including diabetes, hypertension, and neurological disorders. Get accurate results within minutes and take control of your health journey.</p>
-            <button class="cta-btn" onclick="scrollToFeatures()">Discover How It Works</button>
-        </div>
-    </section>
+<section class="hero" id="home">
+  <div>
+    <h1>Early Disease Detection Through AI Eye Analysis</h1>
+    <p>Our advanced AI-powered application analyzes eye images to detect early signs of diseases including diabetes, hypertension, and neurological disorders. Get accurate results within minutes and take control of your health journey.</p>
+    <button class="cta-btn" onclick="scrollToFeatures()">Discover How It Works</button>
+  </div>
+</section>
+<div id="spline-container">
+  <spline-viewer url="https://prod.spline.design/m8ooEscIY6HeqWPV/scene.splinecode"></spline-viewer>
+</div>
 
-    <section class="features" id="features">
-        <h2 class="section-title">Key Features</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <h3>AI-Powered Analysis</h3>
-                <p>Advanced machine learning models trained on extensive clinical datasets provide accurate disease risk assessment through detailed eye image analysis.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Quick Results</h3>
-                <p>Receive comprehensive analysis within minutes, including detailed risk assessments and recommended next steps for your healthcare journey.</p>
-            </div>
-            <div class="feature-card">
-                <h3>Healthcare Integration</h3>
-                <p>Designed for both individuals and healthcare providers, our solution streamlines the diagnostic process and helps prioritize cases effectively.</p>
-            </div>
-        </div>
-    </section>
+<section class="features" id="features">
+  <h2 class="section-title">Key Features</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <h3>AI-Powered Analysis</h3>
+      <p>Advanced machine learning models trained on extensive clinical datasets provide accurate disease risk assessment through detailed eye image analysis.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Quick Results</h3>
+      <p>Receive comprehensive analysis within minutes, including detailed risk assessments and recommended next steps for your healthcare journey.</p>
+    </div>
+    <div class="feature-card">
+      <h3>Healthcare Integration</h3>
+      <p>Designed for both individuals and healthcare providers, our solution streamlines the diagnostic process and helps prioritize cases effectively.</p>
+    </div>
+  </div>
+</section>
 
-    <section class="process" id="process">
-        <h2 class="section-title">How It Works</h2>
-        <div class="process-steps">
-            <div class="step">
-                <div class="step-number">1</div>
-                <h3>Capture</h3>
-                <p>Take a clear photo of your eye using our guided interface</p>
-            </div>
-            <div class="step">
-                <div class="step-number">2</div>
-                <h3>Analyze</h3>
-                <p>Our AI processes the image using advanced machine learning models</p>
-            </div>
-            <div class="step">
-                <div class="step-number">3</div>
-                <h3>Results</h3>
-                <p>Receive detailed analysis and recommended next steps</p>
-            </div>
-        </div>
-    </section>
+<section class="process" id="process">
+  <h2 class="section-title">How It Works</h2>
+  <div class="process-steps">
+    <div class="step">
+      <div class="step-number">1</div>
+      <h3>Capture</h3>
+      <p>Take a clear photo of your eye using our guided interface</p>
+    </div>
+    <div class="step">
+      <div class="step-number">2</div>
+      <h3>Analyze</h3>
+      <p>Our AI processes the image using advanced machine learning models</p>
+    </div>
+    <div class="step">
+      <div class="step-number">3</div>
+      <h3>Results</h3>
+      <p>Receive detailed analysis and recommended next steps</p>
+    </div>
+  </div>
+</section>
 
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-item">
-                <h3 class="counter" data-target="98">0</h3>
-                <p>% Accuracy Rate</p>
-            </div>
-            <div class="stat-item">
-                <h3 class="counter" data-target="50000">0</h3>
-                <p>Analyses Completed</p>
-            </div>
-            <div class="stat-item">
-                <h3 class="counter" data-target="15">0</h3>
-                <p>Detectable Conditions</p>
-            </div>
-            <div class="stat-item">
-                <h3 class="counter" data-target="5">0</h3>
-                <p>Minute Analysis Time</p>
-            </div>
-        </div>
-    </section>
+<section class="stats">
+  <div class="stats-grid">
+    <div class="stat-item">
+      <h3 class="counter" data-target="75">0</h3>
+      <p>% Accuracy Rate</p>
+    </div>
+    <div class="stat-item">
+      <h3 class="counter" data-target="10">0</h3>
+      <p>Analyses Completed</p>
+    </div>
+    <div class="stat-item">
+      <h3 class="counter" data-target="15">0</h3>
+      <p>Detectable Conditions</p>
+    </div>
+    <div class="stat-item">
+      <h3 class="counter" data-target="3">0</h3>
+      <p>Minute Analysis Time</p>
+    </div>
+  </div>
+</section>
 
-    <footer>
-        <p>&copy; 2024 Aubrite Health AI. Transforming healthcare through innovation.</p>
-    </footer>
+<footer>
+  <p>&copy; 2024 Aubrite Health AI. Transforming healthcare through innovation.</p>
+</footer>
 
-    <script>
-        function scrollToFeatures() {
-            document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
-        }
+<script>
+  function scrollToFeatures() {
+      document.getElementById('features').scrollIntoView({ behavior: 'smooth' });
+  }
 
-        const counters = document.querySelectorAll('.counter');
-        
-        counters.forEach(counter => {
-            const target = +counter.getAttribute('data-target');
-            const increment = target / 100;
-            
-            const updateCounter = () => {
-                const count = +counter.innerText;
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + increment);
-                    setTimeout(updateCounter, 20);
-                } else {
-                    counter.innerText = target;
-                }
-            };
+  const counters = document.querySelectorAll('.counter');
 
-            const observer = new IntersectionObserver((entries) => {
-                if (entries[0].isIntersecting) {
-                    updateCounter();
-                }
-            });
+  counters.forEach(counter => {
+      const target = +counter.getAttribute('data-target');
+      const increment = target / 100;
 
-            observer.observe(counter);
-        });
-    </script>
+      const updateCounter = () => {
+          const count = +counter.innerText;
+          if (count < target) {
+              counter.innerText = Math.ceil(count + increment);
+              setTimeout(updateCounter, 20);
+          } else {
+              counter.innerText = target;
+          }
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+          if (entries[0].isIntersecting) {
+              updateCounter();
+          }
+      });
+
+      observer.observe(counter);
+  });
+</script>
+
 </body>
 </html>
